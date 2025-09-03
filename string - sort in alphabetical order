@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char str[100], temp;
+    int i, j, n;
+
+    printf("Enter a string: ");
+    gets(str); // Read string
+
+    n = strlen(str);
+
+    // Sort characters using simple bubble sort
+    for (i = 0; i < n - 1; i++) {
+        for (j = i + 1; j < n; j++) {
+            if (str[i] > str[j]) {
+                temp = str[i];
+                str[i] = str[j];
+                str[j] = temp;
+            }
+        }
+    }
+
+    printf("String in alphabetical order: %s\n", str);
+
+    return 0;
+}
