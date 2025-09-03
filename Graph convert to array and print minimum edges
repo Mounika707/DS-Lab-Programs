@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Edge {
+    int src, dest, weight;
+};
+
+// Function to compare edges by weight (for qsort)
+int compare(const void* a, const void* b) {
+    struct Edge* e1 = (struct Edge*)a;
+    struct Edge* e2 = (struct Edge*)b;
+    return e1->weight - e2->weight;
+}
+
+int main() {
+    int n;
+    printf("Enter number of vertices: ");
+    scanf("%d", &n);
+
+    int graph[20][20];
+    printf("Enter adjacency matrix (0 if no edge):\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &graph[i][j]);
+        }
+    }
+
+    struct Edge edges[100];
+    int k = 0;
+
+    // Convert adjacency matrix to edge list
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) { // avoid duplicates in undirected graph
+            if (graph[i][j] != 0) {
+                edges[k].src = i;
+                edges[k].dest = j;
+                edges[k].weight = graph[i][j];
+                k++;
+            }
+        }
+    }
+
+    // Sort edges by weight
+    qsort(edges, k, sizeof(struct Edge), compare);
+
+    // Print edges in ascending order of weight
+    printf("\nEdges in ascending order of weight:\n");
+    for (int i = 0; i < k; i++) {
+        printf("%d -- %d  Weight: %d\n", edges[i].src, edges[i].dest, edges[i].weight);
+    }
+
+    return 0;
+}
